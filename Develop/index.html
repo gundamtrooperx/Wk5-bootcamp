@@ -99,11 +99,39 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
-      let date = new Date();
-      document.getElementById("date").innerHTML = date;
+       let date = new Date();
+       document.getElementById("date").innerHTML = date;
 
-      
-      
+      // getting current hours from timestamp;
+
+var time = date.getHours();
+
+// once document is loaded and ready
+$(document).ready(function() {
+  var timeBlock = $("tr.timeBlock")
+
+  // rows is an array of divs, let's work with each element one by one 
+  $.each(timeBlock, function(idx, timeBlock) {
+    //remove previous classes assigned to it (this may not be necessary)
+     //$(timeBlock).removeClass("past");
+     //$(timeBlock).removeClass("present");
+     //$(timeBlock).removeClass("future");
+
+    // Read the value of the data-time attribute & turn it into a number
+    var dataAttString = $(timeBlock).data('time');
+    var dataAttNum = Number(dataAttString);
+
+    // assign a CSS class according to the current hour (calculated at the beginning)
+    if (dataAttNum < time) {
+      $(timeBlock).addClass("past");
+    } else if (dataAttNum === time) {
+      $(timeBlock).addClass("present");
+    } else if (dataAttNum > time) {
+      $(timeBlock).addClass("future");
+    }
+  });
+});
+
     </script>
   </body>
 </html>
